@@ -23,3 +23,21 @@ public:
         
     }
 };
+
+
+
+Approach 2: Using Hashmap,
+            Time Complexity: 0(NlogN);
+            Space Complexity: 0(1)
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        unordered_map<int,int>freq;
+        for(auto it: nums)
+        {
+            if(nums.size()/2 < ++freq[it])
+                return it;
+        }
+        return 0;
+    }
+};

@@ -3,21 +3,25 @@ Brute Force Approach:
 
         Time Complexity : 0(n^2)
         Space Complexity: 
-#include <bits/stdc++.h> 
-using namespace std;
-long long getInversions(long long *arr, int n){
-    // Write your code here.
-    long long int count =0;
-    
-    for(int i=0; i<n; i++)
-    {
-        for(int j=i+1; j<n; j++)
-        {
-            if(arr[i]>arr[j]) count++;
+
+
+        #include <bits/stdc++.h> 
+        using namespace std;
+        long long getInversions(long long *arr, int n){
+            // Write your code here.
+            long long int count =0;
+
+            for(int i=0; i<n; i++)
+            {
+                for(int j=i+1; j<n; j++)
+                {
+                    if(arr[i]>arr[j]) count++;
+                }
+            }
+            return count;
         }
-    }
-    return count;
-}
+
+
 
 
 
@@ -37,3 +41,4 @@ long long getInversions(long long *arr, int n)
   
  return a; 
 }
+

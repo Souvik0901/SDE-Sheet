@@ -41,7 +41,8 @@ public:
 Optimal Approach:
 
 Time Complexity: 0(MN)
- Space Complexity: 0(1)
+Space Complexity: 0(1)
+     
 class Solution {
 public:
     void setZeroes(vector<vector<int>>& matrix) {
@@ -99,3 +100,4 @@ public:
         }
     }
 };
+

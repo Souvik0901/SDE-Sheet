@@ -1,31 +1,21 @@
 class Solution {
 public:
-    long long findTheArrayConcVal(vector<int>& nums) 
-    {
-        int i = 0;
-        int j = nums.size()-1;
+    long long findTheArrayConcVal(vector<int>& nums) {
+        int n = nums.size();
         long long sum =0;
-        int c=0;
-        while(i<j)
-        {
-          c= concat(nums[i],nums[j]);
-           sum+= c;
-            i++;
-            j--;
-            if(i==j)
-             sum+=nums[i];
+        for (int i=0; i<nums.size()/2; i++){
+            sum+= concatenate(nums[i], nums[n-1-i]);
         }
-        
+
+        if(n %2 == 1){
+            sum+=nums[n/2];
+        }
         return sum;
     }
-    
-    long long concat(int n1, int n2)
-    {
-        string num1 = to_string(n1);
-        string num2 = to_string(n2);
-        num1 =num1+num2;
-        
-        long long p = stoi(num1);
-        return p;
+
+    long long concatenate(long long a, long long b){
+        long long mul = 10;
+        for (long long t = b; t >= 10; t /= 10) mul *= 10;       // Logic for concatenate two number   
+        return a * mul + b;
     }
 };

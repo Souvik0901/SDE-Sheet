@@ -27,7 +27,7 @@ void insertAtEnd(Node*& head, int value){
 }
 
 // Search Element
-int searchElm(Node*head, int value){
+int searchElm(Node*& head, int value){
     Node*temp = head;
     int cnt=0;
     while(temp!=nullptr){
@@ -40,8 +40,31 @@ int searchElm(Node*head, int value){
     return 0;
 }
 
-void reverseLL(Node* head){
-    
+void reverseLL(Node*& head){
+    Node *prev = nullptr;
+    Node *current = head;
+    Node *next = nullptr;
+
+    while(current!=nullptr){
+        next= current->next; // stored current's next in 'next'
+        current-> next = prev; // changes current's next to prev
+        prev = current;
+        current = next;
+    }
+    head= prev;
+}
+
+int midleelem(Node*& head){
+    Node* temp = head;
+    int n =0;
+    while(temp!= nullptr){
+        n++;
+        temp= temp->next;
+    }
+    for(int i=0; i<n/2; i++){
+        head= head->next;
+    }
+    return head->data;
 }
 
 // display list
@@ -58,13 +81,22 @@ int main(){
    insertAtEnd(head, 5);
    insertAtEnd(head, 10);
    insertAtEnd(head, 15);
+   insertAtEnd(head, 23);
+   insertAtEnd(head, 45);
+
    cout<<"Inserted Elements :";
    displayList(head);
    
    int index = searchElm(head, 15);
    cout<<"\nSearch Element: "<<index;
    
+   reverseLL(head);
+   cout<<"\nReversed LL: ";
+   displayList(head);
    
+   
+   cout<<"\nMiddle Elm: "<<midleelem(head);
    
 }
+
 

@@ -40,6 +40,10 @@ int searchElm(Node*head, int value){
     return 0;
 }
 
+void reverseLL(Node* head){
+    
+}
+
 // display list
 void displayList(Node*& head){
     Node* temp = head;
@@ -54,9 +58,13 @@ int main(){
    insertAtEnd(head, 5);
    insertAtEnd(head, 10);
    insertAtEnd(head, 15);
-
+   cout<<"Inserted Elements :";
    displayList(head);
    
    int index = searchElm(head, 15);
-   cout<<index;
+   cout<<"\nSearch Element: "<<index;
+   
+   
+   
 }
+

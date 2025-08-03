@@ -40,32 +40,53 @@ int searchElm(Node*& head, int value){
     return 0;
 }
 
+// Function to reverse the linkedlist
 void reverseLL(Node*& head){
-    Node *prev = nullptr; 
+    Node *prev = nullptr;
     Node *current = head;
     Node *next = nullptr;
 
     while(current!=nullptr){
         next= current->next; // stored current's next in 'next'
         current-> next = prev; // changes current's next to prev
-        prev = current;   // upgrade 1 index to prev 
-        current = next;  // upgrade 1 index to Current
+        prev = current;
+        current = next;
     }
     head= prev;
 }
 
+//Function to finding middle element
 int midleelem(Node*& head){
     Node* temp = head;
+    Node* temp1 = head;
     int n =0;
     while(temp!= nullptr){
         n++;
         temp= temp->next;
     }
+    temp =head;
     for(int i=0; i<n/2; i++){
-        head= head->next;
+        temp= temp->next;
     }
-    return head->data;
+    return temp->data;
 }
+
+//Merge Two Lists
+Node* mergeTwoList(Node* l1, Node* l2){
+    if(l1 == NULL) return l2;
+    if(l2 == NULL) return l1;
+    
+    if(l1->data <= l2->data){
+        l1->next = mergeTwoList(l1->next, l2);
+        return l1;
+    }
+    else if(l1->data> l2->data){
+        l2->next = mergeTwoList(l1, l2->next);
+        return l2;
+    }
+    return l2;
+}
+
 
 // display list
 void displayList(Node*& head){
@@ -83,20 +104,29 @@ int main(){
    insertAtEnd(head, 15);
    insertAtEnd(head, 23);
    insertAtEnd(head, 45);
+   
+   Node* newlist = nullptr;
+   insertAtEnd(newlist, 12);
+   insertAtEnd(newlist, 15);
+   insertAtEnd(newlist, 19);
+   
 
    cout<<"Inserted Elements :";
    displayList(head);
    
-   int index = searchElm(head, 15);
-   cout<<"\nSearch Element: "<<index;
+  int index = searchElm(head, 15);
+  cout<<"\nSearch Element: "<<index;
    
-   reverseLL(head);
-   cout<<"\nReversed LL: ";
-   displayList(head);
+//   reverseLL(head);
+//   cout<<"\nReversed LL: ";
+//   displayList(head);
    
+  cout<<"\nMiddle Elm: "<<midleelem(head);
    
-   cout<<"\nMiddle Elm: "<<midleelem(head);
-   
+   Node* mergedHead = mergeTwoList(head, newlist);
+   cout << "\nMerged List: ";
+   displayList(mergedHead);
+   cout << endl;
 }
 
 

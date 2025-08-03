@@ -84,7 +84,6 @@ Node* mergeTwoList(Node* l1, Node* l2){
         l2->next = mergeTwoList(l1, l2->next);
         return l2;
     }
-    return l2;
 }
 
 

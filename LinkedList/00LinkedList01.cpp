@@ -41,15 +41,15 @@ int searchElm(Node*& head, int value){
 }
 
 void reverseLL(Node*& head){
-    Node *prev = nullptr;
+    Node *prev = nullptr; 
     Node *current = head;
     Node *next = nullptr;
 
     while(current!=nullptr){
         next= current->next; // stored current's next in 'next'
         current-> next = prev; // changes current's next to prev
-        prev = current;
-        current = next;
+        prev = current;   // upgrade 1 index to prev 
+        current = next;  // upgrade 1 index to Current
     }
     head= prev;
 }

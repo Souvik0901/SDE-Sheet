@@ -42,7 +42,7 @@ public:
 };
 
 
-
+------------------------------------------------------------------------------
 Approach 2:
 
 Time Complexity: 0(N);
@@ -75,8 +75,32 @@ public:
     }
 };
 
+------------------------------------------------------------------------------
+//Approach 3: using substring
+class Solution {
+public:
+    string reverseWords(string s) {
+        int j =0;
+        stack<string>st;
+        for(int i=0; i<s.length(); i++){
+            if(s[i]== ' '){
+                if(i>j) st.push(s.substr(j, i - j));  
+                j= i+1;
+            }     
+        }
 
+        // push the last word
+        if (j < s.length()) {
+            st.push(s.substr(j, s.length() - j));
+        }
 
-
-
+        string ans = "";
+        while(!st.empty()){
+          ans+= st.top();
+          st.pop();
+          if(!st.empty()) ans+=" ";
+        }
+        return ans;
+    }
+};
 

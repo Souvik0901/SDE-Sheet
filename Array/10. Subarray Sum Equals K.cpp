@@ -20,7 +20,7 @@ public:
         return ans;
     }
 };
-
+------------------------------------------------------------------------------
 Approach 2: Optimal Solution
 
 class Solution {
@@ -45,3 +45,24 @@ public:
     }
 };
 
+
+
+-----------------------------------------------------------------
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+        unordered_map<int, int>map;
+        map[0]=1;
+        int count=0;
+        int prefixsum =0;
+
+        for(int num : nums){
+            prefixsum+=num;
+            if(map.find(prefixsum-k)!=map.end()){
+                 count+= map[prefixsum-k];
+            }
+            prefixSumCount[prefixsum]++;
+        }
+        return count;
+    }
+};

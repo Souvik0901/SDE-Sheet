@@ -25,51 +25,47 @@ vector<int>bfs(int n,vector<int>adj[]){
       return ans;
 }
 
-void addEdge(vector<int>adj[], int u, int v){
-    adj[u].push_back(v);
-    adj[v].push_back(u);
-}
 
 //function for rotten oranges
-int rottenOranges(vector<vector<int>>&grid){
-   int mins =0;
-   int fresh =0;
-   int rows = grid.size();
-   int cols = grid[0].size();
-   queue<pair<int, int>>q;
+// int rottenOranges(vector<vector<int>>&grid){
+//    int mins =0;
+//    int fresh =0;
+//    int rows = grid.size();
+//    int cols = grid[0].size();
+//    queue<pair<int, int>>q;
   
-  //initially 
-   for(int r=0; r<rows; r++){
-    for(int c=0; c<cols; c++){
-        if(grid[r][c]==2)
-          q.push({r,c});
-        else if(grid[r][c]==1)fresh++;
-    }
-   }
+//   //initially 
+//    for(int r=0; r<rows; r++){
+//     for(int c=0; c<cols; c++){
+//         if(grid[r][c]==2)
+//           q.push({r,c});
+//         else if(grid[r][c]==1)fresh++;
+//     }
+//    }
 
-   //directions
-   vector<pair<int,int>>dir ={{-1,0},{0,-1},{1,0},{0,1}};
+//    //directions
+//    vector<pair<int,int>>dir ={{-1,0},{0,-1},{1,0},{0,1}};
 
-   //bfs 
-   while(!q.empty() and fresh>0){
-    mins++;
-      for(int i=0; i<q.size(); i++){
-        auto[r,c]= q.front();
-        q.pop();
-        for(auto[dr, dc]: dir){
-            int nr = r+dr;
-            int nc = c+dc;
-           if(nr>=0 and nr<rows and nc>=0 and nc<cols and grid[nr][nc] ==1){
-             grid[nr][nc]=2;
-             fresh--;
-             q.push({nr,nc});
-           }
-        }
-      }
+//    //bfs 
+//    while(!q.empty() and fresh>0){
+//     mins++;
+//       for(int i=0; i<q.size(); i++){
+//         auto[r,c]= q.front();
+//         q.pop();
+//         for(auto[dr, dc]: dir){
+//             int nr = r+dr;
+//             int nc = c+dc;
+//            if(nr>=0 and nr<rows and nc>=0 and nc<cols and grid[nr][nc] ==1){
+//              grid[nr][nc]=2;
+//              fresh--;
+//              q.push({nr,nc});
+//            }
+//         }
+//       }
 
-   }
-   return fresh==0? mins:-1;
-}
+//    }
+//    return fresh==0? mins:-1;
+// }
 
 //recursive dfs helper
 void dfshelper(int node, vector<int>adj[], vector<int>&ans, vector<bool>&visited){
@@ -94,6 +90,11 @@ vector<int>dfs(int n, vector<int>adj[]){
 }
 
 
+void addEdge(vector<int>adj[], int u, int v){
+    adj[u].push_back(v);
+    adj[v].push_back(u);
+}
+
 
 
 int main(){
@@ -106,19 +107,21 @@ int main(){
     addEdge(adj,7,5);
     addEdge(adj,0,3);
     addEdge(adj,3,8);
-    vector<int>ans = bfs(8, adj);
 
+    //bfs output return
+    vector<int>ans = bfs(8, adj);
     for(int i =0; i<ans.size(); i++){
         cout<<ans[i]<<" ";
     }
 
-    vector<vector<int>>grid= {{2,1,1},{1,1,0},{0,1,1}};
-    int result= rottenOranges(grid);
-    cout<<"Roten Oranges time taken: ";
-    cout<<result<<endl;
+    // vector<vector<int>>grid= {{2,1,1},{1,1,0},{0,1,1}};
+    // int result= rottenOranges(grid);
+    // cout<<"Roten Oranges time taken: ";
+    // cout<<result<<endl;
 
+
+    //dfs output return
     vector<int>dfsresult = dfs(8,adj);
-
     for(int i =0; i<ans.size(); i++){
         cout<<dfsresult[i]<<" ";
     }

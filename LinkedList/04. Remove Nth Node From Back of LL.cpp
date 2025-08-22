@@ -28,3 +28,33 @@ public:
         return head;
     }
 };
+
+_________________________________________________________________________________
+
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        // Create a dummy node to handle edge cases (like removing the head)
+        ListNode* dummy = new ListNode(0, head);
+        ListNode* fast = dummy;
+        ListNode* slow = dummy;
+
+        // Step 1: Move fast ahead by n+1 steps so that slow is just before target
+        for (int i = 0; i <= n; i++) {
+            fast = fast->next;
+        }
+
+        // Step 2: Move both fast and slow until fast reaches the end
+        while (fast != nullptr) {
+            fast = fast->next;
+            slow = slow->next;
+        }
+
+        // Step 3: Remove the nth node
+        ListNode* nodeToDelete = slow->next;
+        slow->next = slow->next->next;
+        delete nodeToDelete;  // Free memory
+
+        return dummy->next; // Return new head
+    }
+};

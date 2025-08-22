@@ -2,7 +2,7 @@
 using namespace std;
 
 class CourseRatingSystem {
-    unordered_map<string, pair<int,int>> courseRatings;  // courseId -> {sum, count}
+    unordered_map<string, pair<int,int>> courseRatings; // courseId -> {sum, count}
     unordered_map<string, int> userRatings;             // "userId#courseId" -> rating
 
     string makeKey(const string &userId, const string &courseId) {
@@ -13,12 +13,10 @@ public:
     void addRating(const string &userId, const string &courseId, int rating) {
         string key = makeKey(userId, courseId);
 
-        // Ensure courseId entry exists
         if(courseRatings.find(courseId) == courseRatings.end()) {
             courseRatings[courseId] = {0, 0};
         }
 
-        // If user already rated → adjust old rating
         if(userRatings.find(key) != userRatings.end()) {
             int oldRating = userRatings[key];
             courseRatings[courseId].first -= oldRating;
@@ -38,27 +36,62 @@ public:
         auto [sum, count] = courseRatings[courseId];
         return (double)sum / count;
     }
+
+    vector<pair<string,double>> getTopK(int k) {
+        using P = pair<double,string>; // {avg, courseId}
+
+        priority_queue<P, vector<P>, greater<P>> minHeap;
+
+        for (auto &p : courseRatings) {
+            if (p.second.second == 0) continue;
+            double avg = (double)p.second.first / p.second.second;
+            minHeap.push({avg, p.first});
+            if ((int)minHeap.size() > k) {
+                minHeap.pop(); // keep only top K
+            }
+        }
+
+        vector<pair<string,double>> result;
+        while(!minHeap.empty()) {
+            result.push_back({minHeap.top().second, minHeap.top().first});
+            minHeap.pop();
+        }
+
+        reverse(result.begin(), result.end()); // highest first
+        return result;
+    }
 };
 
 int main() {
     CourseRatingSystem rs;
 
-    // Example input
+    // Add ratings
     rs.addRating("User1", "Course1", 3);
     rs.addRating("User2", "Course1", 5);
     rs.addRating("User2", "Course2", 3);
     rs.addRating("User1", "Course2", 4);
     rs.addRating("User1", "Course3", 5);
     rs.addRating("User2", "Course3", 1);
+    rs.addRating("User3", "Course4", 5);
+    rs.addRating("User4", "Course4", 4);
+    rs.addRating("User5", "Course5", 2);
+    rs.addRating("User6", "Course5", 1);
 
     cout << fixed << setprecision(2);
-    cout << "Course1 Average: " << rs.getAverage("Course1") << endl; // 4.00
-    cout << "Course2 Average: " << rs.getAverage("Course2") << endl; // 3.50
-    cout << "Course3 Average: " << rs.getAverage("Course3") << endl; // 3.00
 
-    // Test update (User1 changes rating for Course1 from 3 → 1)
-    rs.addRating("User1", "Course1", 1);
-    cout << "Course1 Average after update: " << rs.getAverage("Course1") << endl; // (1+5)/2 = 3.00
+    cout << "Average ratings:\n";
+    cout << "Course1: " << rs.getAverage("Course1") << endl;
+    cout << "Course2: " << rs.getAverage("Course2") << endl;
+    cout << "Course3: " << rs.getAverage("Course3") << endl;
+    cout << "Course4: " << rs.getAverage("Course4") << endl;
+    cout << "Course5: " << rs.getAverage("Course5") << endl;
+
+    cout << "\nTop 10 Courses:\n";
+    auto top = rs.getTopK(10);
+    for (auto &p : top) {
+        cout << p.first << " -> " << p.second << endl;
+    }
 
     return 0;
 }
+

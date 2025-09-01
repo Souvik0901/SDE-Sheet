@@ -8,8 +8,8 @@ private:
 
 public:
     // Constructor
-    Queue(int capacity) {
-        size = capacity;
+    Queue(int n) {
+        size = n;
         arr = new int[size];
         front = 0;
         rear = -1;

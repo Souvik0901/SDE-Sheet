@@ -47,3 +47,68 @@ int main() {
 
     return 0;
 }
+
+_______________________________________________________________________________
+
+#include <bits/stdc++.h>
+using namespace std;
+
+/*
+ Helper function:
+ Finds the minimum window length (prefix of a rotation)
+ that contains all numbers 0..mex-1
+*/
+int minWindowWithAll(vector<int>& A, int N, int mex) {
+    if (mex == 0) return 0; // nothing required
+
+    vector<int> freq(mex, 0);  //frequency store
+    int have = 0, need = mex;
+    int best = N;
+
+    int left = 0;
+    for (int right = 0; right < 2 * N; right++) {
+        int val = A[right % N];
+        if (val < mex && ++freq[val] == 1) have++;
+
+        // shrink window while it covers all needed values
+        while (have == need && left <= right) {
+            int len = right - left + 1;  //length
+            if (len <= N) best = min(best, len);  //min length
+
+            int v = A[left % N];
+            if (v < mex && --freq[v] == 0) have--;
+            left++;
+        }
+    }
+    return best;
+}
+
+// Main solver
+int get_ans(int N, vector<int> A) {
+    
+    // 1. Find MEX of the whole array
+    vector<int> seen(N + 1, 0);
+    for (int x : A) if (x <= N) seen[x] = 1;
+
+    int mex = 0;
+    while (mex <= N && seen[mex]) mex++;
+
+    // 2. Find smallest prefix length
+    return minWindowWithAll(A, N, mex);
+}
+
+
+// ------------ Example usage ------------
+int main() {
+    vector<int> A1 = {1,1,0};
+    cout << get_ans(3, A1) << "\n";  // Output: 2
+
+    vector<int> A2 = {0,1,2};
+    cout << get_ans(3, A2) << "\n";  // Output: 3
+
+    vector<int> A3 = {2,3,4};
+    cout << get_ans(3, A3) << "\n";  // Output: 0
+
+    return 0;
+}
+

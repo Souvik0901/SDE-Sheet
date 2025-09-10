@@ -1,29 +1,30 @@
 class Solution {
 public:
     void nextPermutation(vector<int>& nums) {
-        int n = nums.size(), l,i;
-        
-            for( i=n-2; i>=0; i--)
+        int i, left;
+        //breaking point
+        for(i = nums.size()-2; i>=0; i--){
+            if(nums[i] <nums[i+1])
+            break;  
+        }
+
+        //reverse if you come to end permutation
+        if(i<0){
+            reverse(nums.begin(), nums.end());
+        }
+       
+        // not the end permutation
+        else{
+            for(left=nums.size()-1; left>=0; left--)
             {
-                if(nums[i]<nums[i+1])
-                     break;
-            } 
-            if(i<0)
-                reverse(nums.begin(),nums.end());
-            else
-            {
-                for(l=n-1; l>i;l--)
-                {
-                if(nums[i]<nums[l])
+                if(nums[i]<nums[left])
                     break;
-                }
-            
-            
-            swap(nums[i],nums[l]);
-            reverse(nums.begin()+i+1,nums.end());
             }
-            
-    
-        
+            swap(nums[i], nums[left]);
+            reverse(nums.begin()+i+1, nums.end());
+        }
     }
+
 };
+
+__________________________________________________________

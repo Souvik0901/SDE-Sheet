@@ -42,5 +42,45 @@ public:
     }
 };
 
+//Divide and Conquer Approach( Using Recursion)
+//Time Complexity: 0(N LogK)
+//Space Complexity: 0(LogK)
+______________________________________________________________________________________
+
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+        if(list1==NULL) return list2;
+        if(list2==NULL) return list1;
+
+        if(list1->val <= list2->val)
+        {
+            list1->next = mergeTwoLists(list1->next, list2);
+            return list1;
+        }
+
+        if(list2->val <= list1->val)
+        {
+            list2->next= mergeTwoLists(list2->next, list1);
+            return list2;
+        }
+        return NULL;
+    }
+
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        if(lists.empty()) return nullptr;
+        for(int i=1; i<lists.size(); i++){
+            lists[0] = mergeTwoLists(lists[0], lists[i]);
+        }
+        return lists[0];
+    }
+
+};
+
+//Iterative Merge 
+//Time Complexity: 0(N K)
+//Space Complexity: 0(1)
+
+______________________________________________________________________________
 
 ________________________________________________________________________________________

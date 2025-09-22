@@ -84,24 +84,26 @@ bool isCycleDetect(vector<int>adj[], int n){
 
 
 // Cycle Detection Using DFS
-bool checkCycleWithDfs(vector<int>adj[], int node, vector<bool>&visited, int parent){
-     visited[node] = true;
-     for(auto it: adj[node]){
-        if(!visited[it])
-        {
-            if(checkCycleWithDfs(adj, it, visited, parent)) return true;
+bool checkCycleWithDFS(int node, int parent, vector<int> adj[], vector<int>& vis) {
+    vis[node] = 1;
+
+    for(auto it : adj[node]) {
+        if(!vis[it]) {
+            if(dfs(it, node, adj, vis)) return true;
         }
-        else if(it != parent) return true;
-     }
-     return false;
+        else if(it != parent) {
+            return true;  // cycle found
+        }
+    }
+    return false;
 }
 
-bool isCycleDetectDFS(vector<int>adj[], int n){
-    vector<bool>visited(n, false);
-    for(int i=1; i<n; i++){
-        if(!visited[i])
-            return checkCycleWithDfs(adj, i, visited, -1);
-       
+bool isCycleDetectDFS(int v, vector<int> adj[]) {
+    vector<int> vis(v+1, 0);
+    for(int i=1; i<=v; i++) {
+        if(!vis[i]) {
+            if(checkCycleWithDFS(i, -1, adj, vis)) return true;
+        }
     }
     return false;
 }
